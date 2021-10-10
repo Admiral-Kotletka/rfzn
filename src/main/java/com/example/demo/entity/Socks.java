@@ -8,20 +8,48 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 
 @Entity
 public class Socks {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
     private String color;
-    @NotEmpty
     @Min(0)
     @Max(100)
     private int cottonPart;
-    private int quantity=0;
+    @Positive
+    @Min(1)
+    private int quantity;
+
+    @Override
+    public String toString() {
+        return "Socks{" +
+                "id=" + id +
+                ", color='" + color + '\'' +
+                ", cottonPart=" + cottonPart +
+                ", quantity=" + quantity +
+                '}';
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getCottonPart() {
+        return cottonPart;
+    }
+
+    public void setCottonPart(int cottonPart) {
+        this.cottonPart = cottonPart;
+    }
 
     public Long getId() {
         return id;
@@ -39,19 +67,4 @@ public class Socks {
         this.color = color;
     }
 
-    public int getCottonPart() {
-        return cottonPart;
-    }
-
-    public void setCottonPart(int cottonPart) {
-        this.cottonPart = cottonPart;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }
