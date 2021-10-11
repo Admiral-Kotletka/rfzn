@@ -6,10 +6,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,7 +30,7 @@ public class SocksController {
     @PostMapping("/socks/outcome")
     public ResponseEntity<String> socksOutcome(@Valid @RequestBody Socks socks) throws NotFoundException {
         if (!socksService.isAlreadyExist(socks)) {
-            return new ResponseEntity<>("no such Entity in database", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         if (socksService.isEnoughQuantity(socks)) {
             socksService.updateQuantityOutcome(socks);
@@ -41,5 +38,10 @@ public class SocksController {
         } else {
             return new ResponseEntity<>("don't have such amount of socks", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/socks")
+    public ResponseEntity<String> socksGetQuantity(@RequestParam String color, @RequestParam String operation, @RequestParam int cottonPart){
+        return socksService.countSocksWithParams(color, cottonPart, operation);
     }
 }

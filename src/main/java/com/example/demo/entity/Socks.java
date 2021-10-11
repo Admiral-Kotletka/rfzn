@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 
 
 @Entity
@@ -21,8 +20,7 @@ public class Socks {
     @Min(0)
     @Max(100)
     private int cottonPart;
-    @Positive
-    @Min(1)
+    @Min(0)
     private int quantity;
 
     @Override
